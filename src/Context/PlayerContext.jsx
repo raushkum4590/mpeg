@@ -1,3 +1,4 @@
+
 import React, { createContext, useEffect, useRef, useState } from 'react';
 import { songsData } from '../assets/assets';
 
@@ -32,67 +33,88 @@ const PlayerContextProvider = (props) => {
   };
 
   const playWithId = async (id) => {
-    await setTrack(songsData[id]);
-    await audioRef.current.play();
-    setPlayStatus(true);
+    setTrack(songsData[id]);
+    audioRef.current.load();
+    audioRef.current.addEventListener('loadeddata', () => {
+      audioRef.current.play();
+      setPlayStatus(true);
+    }, { once: true });
   };
 
   const previous = async () => {
     if (track.id > 0) {
-      await setTrack(songsData[track.id - 1]);
-      await audioRef.current.play();
-      setPlayStatus(true);
+      const newTrack = songsData[track.id - 1];
+      setTrack(newTrack);
+      audioRef.current.load();
+      audioRef.current.addEventListener('loadeddata', () => {
+        audioRef.current.play();
+        setPlayStatus(true);
+      }, { once: true });
     }
   };
 
   const next = async () => {
     if (track.id < songsData.length - 1) {
-      await setTrack(songsData[track.id + 1]);
-      await audioRef.current.play();
-      setPlayStatus(true);
+      const newTrack = songsData[track.id + 1];
+      setTrack(newTrack);
+      audioRef.current.load();
+      audioRef.current.addEventListener('loadeddata', () => {
+        audioRef.current.play();
+        setPlayStatus(true);
+      }, { once: true });
     }
   };
+
   const seekSong = (e) => {
     const offsetX = e.nativeEvent.offsetX;
     const width = seekBg.current.offsetWidth;
     const duration = audioRef.current.duration;
-    
+
     if (!isNaN(duration)) {
       const newTime = (offsetX / width) * duration;
       audioRef.current.currentTime = newTime;
     }
   };
- // const seekSong = async(e) => {
-   // audioRef.current.currentTime = ((e.nativeEvent.offsetX / seekBg.current.ofsetWidth)*audioRef.current.duration)
 
-  //}
   useEffect(() => {
     const handleTimeUpdate = () => {
-      seekBar.current.style.width = `${Math.floor(
-        (audioRef.current.currentTime / audioRef.current.duration) * 100
-      )}%`;
-      setTime({
-        currentTime: {
-          second: Math.floor(audioRef.current.currentTime % 60),
-          minute: Math.floor(audioRef.current.currentTime / 60)
-        },
-        totalTime: {
-          second: Math.floor(audioRef.current.duration % 60),
-          minute: Math.floor(audioRef.current.duration / 60)
-        }
-      });
+      if (audioRef.current) {
+        const currentTime = audioRef.current.currentTime;
+        const duration = audioRef.current.duration;
+
+        seekBar.current.style.width = `${Math.floor(
+          (currentTime / duration) * 100
+        )}%`;
+
+        setTime({
+          currentTime: {
+            second: Math.floor(currentTime % 60),
+            minute: Math.floor(currentTime / 60)
+          },
+          totalTime: {
+            second: Math.floor(duration % 60),
+            minute: Math.floor(duration / 60)
+          }
+        });
+      }
+    };
+
+    const handleEnded = () => {
+      next();
     };
 
     if (audioRef.current) {
       audioRef.current.addEventListener('timeupdate', handleTimeUpdate);
+      audioRef.current.addEventListener('ended', handleEnded);
     }
 
     return () => {
       if (audioRef.current) {
         audioRef.current.removeEventListener('timeupdate', handleTimeUpdate);
+        audioRef.current.removeEventListener('ended', handleEnded);
       }
     };
-  }, [audioRef]);
+  }, [next]);
 
   const contextValue = {
     audioRef,

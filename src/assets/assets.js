@@ -38,10 +38,17 @@ import img12 from './img12.jpg'
 import img14 from './img14.jpg'
 import img15 from './img15.jpg'
 import img16 from './img16.jpg'
-import song1 from  './song1.mp3'
-import song2 from  './song2.mp3'
-import song3 from  './song3.mp3'
+
 import song4 from  './song4.mp3'
+import song3 from  './song3.mp3'
+import song1 from  './song1.mp3'
+
+import song7 from  './song7.mp3'
+import song8 from  './song8.mp3'
+import song9 from './song9.mp3'
+import song10 from './song10.mp3'
+import song2 from './song2.mp3'
+
 
 export const assets = {
     bell_icon,
@@ -118,7 +125,7 @@ export const albumsData = [
 export const songsData = [
     {
         id:0,
-        name: "Song One",
+        name: "christmas song",
         image: img1,
         file:song1,
         desc:"Put a smile on your face with these happy tunes",
@@ -126,7 +133,7 @@ export const songsData = [
     },
     {
         id:1,
-        name: "Song Two",
+        name: "Dost hai",
         image: img2,
         file:song4,
         desc:"Put a smile on your face with these happy tunes",
@@ -134,7 +141,7 @@ export const songsData = [
     },
     {
         id:2,
-        name: "Song Three",
+        name: "I need you",
         image: img3,
         file:song3,
         desc:"Put a smile on your face with these happy tunes",
@@ -142,51 +149,51 @@ export const songsData = [
     },
     {
         id:3,
-        name: "Song Four",
+        name: "Praise The lord",
         image: img4,
-        file:song1,
+        file:song7,
         desc:"Put a smile on your face with these happy tunes",
-        duration:"2:50"
+        duration:"4:50"
     },
     {
         id:4,
-        name: "Song Five",
+        name: "Mere Jeevan",
         image: img5,
-        file:song4,
+        file:song8,
         desc:"Put a smile on your face with these happy tunes",
         duration:"3:10"
     },
     {
         id:5,
-        name: "Song Six",
+        name: "Nacchonga",
         image: img14    ,
-        file:song3,
+        file:song9,
         desc:"Put a smile on your face with these happy tunes",
-        duration:"2:45"
+        duration:"4:20"
     },
     {
         id:6,
-        name: "Song Seven",
+        name: "dekho masiha",
         image: img7,
-        file:song1,
+        file:song3,
         desc:"Put a smile on your face with these happy tunes",
-        duration:"2:18"
+        duration:"5:05"
     },
     {
         id:7,
         name: "Song Eight",
         image: img12,
-        file:song2,
+        file:song10,
         desc:"Put a smile on your face with these happy tunes",
-        duration:"2:35"
+        duration:"6:24"
     },
     {
         id: 8,
-        name: "New Song",
+        name: "Teri stuti",
         image: img12,
-        file: song4,
-        desc: "Description of the new song",
-        duration: "3:30"
+        file: song2,
+        desc: "put a smile on your face with these happy tunes",
+        duration: "6:43"
     }
     
 ]
